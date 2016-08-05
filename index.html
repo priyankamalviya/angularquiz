@@ -6,7 +6,7 @@
   <title>Turtle Facts and Quiz</title>
   <!-- Bootstrap CCS & custom CSS-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <div class="container">
@@ -16,12 +16,16 @@
   </div>
 
   <div ng-controller="listCtrl">
+      <form class ="form-inline well well-sm clearfix">
+        <span class="glyphicon glyphicon-search"></span>
+          <input class="form-control" type="text" placeholder="Search.." ng-model="search"/>
+      </form>
     <div class="row">
-      <div class="col-sm-6" ng-repeat="turtle in data">
+      <div class="col-sm-6" ng-repeat="turtle in data | filter: search">
           <div class="well well-sm">
             <div class="row">
                 <div class="col-md-6">
-                    <img ng-src="{{turtle.image_url}}" class="img-rounded img-responsive">
+                    <img ng-src="{{turtle.image_url}}" class="img-rounded img-responsive well-image">
                 </div>
                 <div class="col-md-6">
                     <h4>{{turtle.type}}</h4>
@@ -29,16 +33,46 @@
                     <p><strong>Size: </strong>{{turtle.size}}</p>
                     <p><strong>Average Lifespan: </strong>{{turtle.lifespan}}</p>
                     <p><strong>Diet: </strong>{{turtle.diet}}</p>
-                    <button class="btn btn-primary pull-right">Learn More</button>
+                    <button class="btn btn-primary pull-right "data-toggle="modal"
+                    data-target="#turtle-info"
+                    ng-click="changeActiveTurtle(turtle)">Learn More</button>
                 </div>
             </div>
           </div>
       </div>
     </div>
+
+      <div class="modal" id="turtle-info">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h2 class="pull-left">{{activeTurtle.type}}</h2>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                          <div class="col-xs-8 col-xs-offset--2">
+                              <img ng-src="{{activeTurtle.image_url}}" class="img-rounded img-responsive well-image">
+                          </div>
+                      </div>
+                      <div class="row top-buffer">
+                          <div class="col-md-6 ">
+                              <p><strong>Locations:</strong>{{activeTurtle.locations}}</p>
+                              <p ><strong>Size:</strong>{{activeTurtle.size}}</p>
+                              <p><strong>Average Lifespan:</strong>{{activeTurtle.lifespan}}</p>
+                              <p><strong>Diet:</strong>{{activeTurtle.diet}}</p>
+                          </div>
+                          <div class="col-xs-12 top-buffer">
+                              <p>{{activeTurtle.description}}</p>
+                              <button class="btn btn-danger pull-right"
+                                      data-dismiss="modal">Close</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
 </div>
-
-
 
 <!-- Angular, jQuery and Bootstrap JS CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.js"></script>
