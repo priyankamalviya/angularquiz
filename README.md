@@ -1,3 +1,5 @@
+** some images arent present on the server anymore, hence appear broken, but that is not due to an issue in the code!
+
 jekyll-gulp-sass-browser-sync
 =============================
 
